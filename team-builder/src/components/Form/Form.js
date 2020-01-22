@@ -1,11 +1,30 @@
 import React, { useState } from 'react'
 
- function Form() {
-     const[teamMember, setTeamMember] = useState([]);
+ function Form(props) {
+     const[teamMember, setTeamMember] = useState({
+         email: '',
+         name:'',
+         role:''
+     });
+
+     const changesHandler = event =>{
+         setTeamMember({
+             ...teamMember, [event.target.name]: event.target.value
+         });
+     }
+const submitHandler= event => {
+    event.preventDefault();
+    const newTeamMember = {
+        ...teamMember,
+        id: Date.now()
+    };
+    props.addNewTeamMember(newTeamMember);
+    setTeamMember({email:'', name:'', role:'',})
+}
 
     return (
         <div>
-            <form>
+            <form onSubmit ={submitHandler}>
                 <label htmlFor='title'>
                   <label htmlFor='name'>Name: </label>  
                 <input  
